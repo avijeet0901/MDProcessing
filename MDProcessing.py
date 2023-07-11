@@ -1,7 +1,5 @@
 #*******#
 #***Code written by Avijeet Kulshrestha*******
-#*****ARGUMENTS*****
-#python PyOcc.py structure-file trajectory-file lipid-name cutoff residue
 #structure-file is *.gro or *.tpr
 #trajectory-file is *.xtc
 #lipid name is the resname (CHL1, POPC, DOPE, etc.)- should match the force field
