@@ -1,10 +1,10 @@
-#*******#
+
 #***Code written by Avijeet Kulshrestha*******
 #structure-file is *.gro or *.tpr
 #trajectory-file is *.xtc
 #lipid name is the resname (CHL1, POPC, DOPE, etc.)- should match the force field
-#cutoff in angstrom (float)
-#Residue number in integer
+#cutoff is in Angstrom (float)
+#Residue number is an integer
 #******
 
 import MDAnalysis as MDA
@@ -13,8 +13,21 @@ from MDAnalysis.analysis.distances import distance_array
 import pandas as pd
 import matplotlib.pyplot as plt
 
-#structure=argv[1];traj=argv[2]; lipid=argv[3];cutoff=argv[4];residue=argv[5];
-
+class autocorrelation:
+    def autocorr(self,x):
+        var=np.var(x); mean=np.mean(x);
+        ac=[]
+        for lag in range(0,len(x)):
+            l=(len(x)-lag); sk=0
+            for i in range(0,l):
+                sk=sk+((x[i]-mean)*(x[i+lag]-mean))
+            ac.append((sk)/(var*len(x)))    
+        
+        df=pd.DataFrame()
+        df['autocorrelation']=ac;
+        df.to_csv('autocorrelation.dat',sep=' ', index=True, header=True)
+        return ('autocorrelation.dat file contains the autocorrelation data')
+        
 class leaflet:
     def __init__(self, structure):
         self.u=MDA.Universe(str(structure))
@@ -33,8 +46,7 @@ class leaflet:
         lower.residues.atoms.write('lower_leaflet.ndx')
         
         return("upper_leaflet.ndx contains upper leaflet atoms and lower_leaflet.ndx conpatins lower leaflet atoms")
-        
-        
+               
 class post_processing:
     def __init__(self, structure, traj):
         self.structure=structure
