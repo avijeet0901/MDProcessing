@@ -66,7 +66,15 @@ import MDProcessing as MDP
 
 15. To compute the autocorrelation of data:
     AC=MDP.autocorrelation();
-    print(AC.autocorr(y)); #y is an array 
+    print(AC.autocorr(y)); #y is an array
+
+16. To compute the occupancy change with time of a molecule on a protein residue:
+    res1=MDP.post_processing('structure.gro', 'trajectory.xtc');
+    print(res1.time_occupancy(residue-id, 'molecule-name', cutoff)); #This will calculate the 'molecule-name' occupancy on the protein residue-id within a given cutoff.
+
+17. To compute the average occupancy of a molecule on a protein residue:
+    res1=MDP.post_processing('structure.gro', 'trajectory.xtc');
+    print(res1.avg_occupancy(residue-id, 'molecule-name', cutoff));
 
 
 Let me know if you find any bugs or want me to add additional analysis. You can write to me at avijeetkulshrestha@gmail.com
